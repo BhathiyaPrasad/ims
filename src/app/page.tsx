@@ -1,65 +1,183 @@
-import Image from "next/image";
+import {
+  GraduationCap,
+  Building2,
+  UserPlus,
+  TrendingUp,
+  BookOpen,
+  FileText,
+  ShieldCheck,
+  Lock,
+} from "lucide-react";
+import { LandingNav } from "@/components/layout/LandingNav";
+import { Footer } from "@/components/layout/Footer";
+import { LinkButton } from "@/components/ui/Button";
+
+const features = [
+  {
+    icon: UserPlus,
+    title: "Automated Registration",
+    body: "Self-service onboarding for companies and students with automated document verification and academic eligibility checks.",
+  },
+  {
+    icon: TrendingUp,
+    title: "GPA-based Recommendations",
+    body: "Our intelligent algorithm matches students to elite opportunities based on academic performance and skill relevance.",
+  },
+  {
+    icon: BookOpen,
+    title: "Digital Record Book",
+    body: "Real-time logging of internship evolution with digital supervisor signatures and university review.",
+  },
+  {
+    icon: FileText,
+    title: "Efficient Reporting",
+    body: "Generate comprehensive evaluation reports and internship completion certificates with a single click.",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <>
+      <LandingNav />
+
+      {/* Hero */}
+      <section id="overview" className="bg-navy text-white">
+        <div className="mx-auto max-w-5xl px-6 py-20 text-center">
+          <h1 className="text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
+            Welcome to the Internship Management System
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mx-auto mt-6 max-w-2xl text-base text-white/80 sm:text-lg">
+            A unified platform connecting students, departments, and industry
+            partners to streamline every step of the internship journey.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+
+          <div className="mx-auto mt-12 grid max-w-3xl gap-6 md:grid-cols-2">
+            <PortalCard
+              icon={<GraduationCap className="h-6 w-6 text-navy" />}
+              title="Student Portal"
+              body="Register as a student to apply for internships, track your placements, and maintain your digital record book."
+              cta="Get Started"
+              href="/student/auth"
+              variant="primary"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <PortalCard
+              icon={<Building2 className="h-6 w-6 text-navy" />}
+              title="Department Portal"
+              body="Manage student placements, oversee internal approvals, and monitor the overall internship program success."
+              cta="Sign Up"
+              href="/department/auth"
+              variant="dark"
+            />
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Trust bar */}
+      <section className="bg-sky-soft">
+        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-8 gap-y-2 px-6 py-5 text-sm text-navy-deep/80">
+          <span className="font-medium">Trusted By</span>
+          <span className="flex items-center gap-2">
+            <ShieldCheck className="h-4 w-4 text-amber-500" />
+            University of Ruhuna
+          </span>
+          <span className="hidden text-navy-deep/30 sm:inline">|</span>
+          <span className="flex items-center gap-2">
+            <Lock className="h-4 w-4" />
+            Secure Portal
+          </span>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="bg-feature-bg">
+        <div className="mx-auto max-w-6xl px-6 py-16">
+          <h2 className="text-center text-3xl font-bold text-navy-deep">
+            Centralized Internship process
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-navy-deep/70">
+            Streamlining collaboration between all stakeholders with an
+            integrated, data-driven platform.
+          </p>
+
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {features.map(({ icon: Icon, title, body }) => (
+              <div
+                key={title}
+                className="rounded-xl border-t-4 border-navy-deep bg-white/60 p-5 shadow-sm backdrop-blur"
+              >
+                <Icon className="h-6 w-6 text-navy-deep" />
+                <h3 className="mt-4 font-semibold text-navy-deep">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-navy-deep/70">
+                  {body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Gateway */}
+      <section className="bg-white">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 md:grid-cols-2">
+          <div>
+            <h2 className="text-3xl font-bold text-navy-deep sm:text-4xl">
+              Your gateway to professional excellence.
+            </h2>
+            <p className="mt-6 leading-relaxed text-foreground/70">
+              Empowering departments to oversee and manage internship programs
+              with ease. Our Student Internship Management System simplifies
+              internship tracking, record management, progress monitoring, and
+              communication, ensuring a smooth internship experience for
+              students.
+            </p>
+            <div className="mt-8">
+              <LinkButton href="/student/auth">Get Started</LinkButton>
+            </div>
+          </div>
+          <div className="flex aspect-[4/3] items-center justify-center rounded-2xl bg-gradient-to-br from-navy to-navy-deep text-center text-white/80 shadow-lg">
+            <div>
+              <Building2 className="mx-auto h-12 w-12" />
+              <p className="mt-3 text-lg font-semibold">INTERNEXUS</p>
+              <p className="text-sm text-white/60">
+                Professional Internship Management
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </>
+  );
+}
+
+function PortalCard({
+  icon,
+  title,
+  body,
+  cta,
+  href,
+  variant,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  body: string;
+  cta: string;
+  href: string;
+  variant: "primary" | "dark";
+}) {
+  return (
+    <div className="flex flex-col rounded-2xl bg-white/95 p-7 text-left text-foreground shadow-lg">
+      <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-sky-soft">
+        {icon}
+      </div>
+      <h3 className="text-center text-xl font-bold text-navy-deep">{title}</h3>
+      <p className="mt-3 text-center text-sm leading-relaxed text-foreground/70">
+        {body}
+      </p>
+      <LinkButton href={href} variant={variant} className="mt-6 w-full">
+        {cta}
+      </LinkButton>
     </div>
   );
 }
