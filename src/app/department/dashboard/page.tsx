@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Users, ClipboardCheck, BarChart3, Pencil } from "lucide-react";
-import { DashboardHeader } from "@/components/layout/DashboardHeader";
+import { DepartmentNav } from "@/components/layout/DepartmentNav";
 import { Footer } from "@/components/layout/Footer";
 import { useAuth } from "@/context/AuthContext";
 
@@ -13,16 +13,19 @@ const cards = [
     icon: Users,
     title: "Student Placements",
     body: "Review registered students and their internship applications.",
+    href: "/department/students",
   },
   {
     icon: ClipboardCheck,
     title: "Approvals",
     body: "Approve or reject placement and record-book submissions.",
+    href: "/department/approvals",
   },
   {
     icon: BarChart3,
     title: "Program Insights",
     body: "Monitor overall internship program performance and reporting.",
+    href: "/department/verification",
   },
 ];
 
@@ -44,7 +47,7 @@ export default function DepartmentDashboard() {
 
   return (
     <>
-      <DashboardHeader subtitle="Department" />
+      <DepartmentNav />
       <main className="flex-1 bg-sky-soft">
         <div className="mx-auto max-w-5xl px-6 py-10">
           <div className="flex flex-wrap items-start justify-between gap-4">
@@ -70,14 +73,20 @@ export default function DepartmentDashboard() {
           </div>
 
           <div className="mt-8 grid gap-5 sm:grid-cols-3">
-            {cards.map(({ icon: Icon, title, body }) => (
-              <div key={title} className="rounded-2xl bg-white p-6 shadow-sm">
+            {cards.map(({ icon: Icon, title, body, href }) => (
+              <Link
+                key={title}
+                href={href}
+                className="group rounded-2xl bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+              >
                 <Icon className="h-6 w-6 text-navy" />
-                <h2 className="mt-4 font-semibold text-navy-deep">{title}</h2>
+                <h2 className="mt-4 font-semibold text-navy-deep group-hover:text-navy">
+                  {title}
+                </h2>
                 <p className="mt-2 text-sm leading-relaxed text-navy-deep/70">
                   {body}
                 </p>
-              </div>
+              </Link>
             ))}
           </div>
 
