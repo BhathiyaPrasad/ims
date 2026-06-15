@@ -33,7 +33,7 @@ function SetPasswordForm() {
     }
 
     const account = setPassword(email, next);
-    if (!account) {
+    if (!account || account.role !== "student") {
       setError("Account not found. Please sign up again.");
       return;
     }

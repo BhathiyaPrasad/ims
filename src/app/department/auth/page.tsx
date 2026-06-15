@@ -9,6 +9,11 @@ import { AuthTabs, type AuthMode } from "@/components/auth/AuthTabs";
 import { Field, Input } from "@/components/ui/Field";
 import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/context/AuthContext";
+import {
+  createDepartmentAccount,
+  getAccount,
+  verifyCredentials,
+} from "@/lib/accounts";
 
 export default function DepartmentAuthPage() {
   const router = useRouter();
@@ -27,10 +32,29 @@ export default function DepartmentAuthPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (mode === "signup" && form.password !== form.confirm) {
-      setError("Passwords do not match.");
+
+    if (mode === "signup") {
+      if (form.password !== form.confirm) {
+        setError("Passwords do not match.");
+        return;
+      }
+      if (getAccount(form.email)) {
+        setError("An account with this email already exists. Please log in.");
+        return;
+      }
+      createDepartmentAccount(form.email, form.password);
+      setError(null);
+      login({ role: "department", email: form.email });
+      router.push("/department/profile/edit");
       return;
     }
+
+    const account = verifyCredentials(form.email, form.password);
+    if (!account || account.role !== "department") {
+      setError("Invalid email or password.");
+      return;
+    }
+
     setError(null);
     login({ role: "department", email: form.email });
     router.push("/department/dashboard");

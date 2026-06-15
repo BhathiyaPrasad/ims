@@ -90,7 +90,6 @@ export default function StudentSignupPage() {
                       />
                     </Field>
                   </div>
-
                   <Field label="Student ID" htmlFor="studentId">
                     <Input
                       id="studentId"
@@ -100,7 +99,6 @@ export default function StudentSignupPage() {
                       required
                     />
                   </Field>
-
                   <Field label="University Email" htmlFor="email">
                     <Input
                       id="email"

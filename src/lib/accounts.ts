@@ -14,7 +14,15 @@ export interface StudentAccount {
   mustReset: boolean;
 }
 
-type AccountMap = Record<string, StudentAccount>;
+export interface DepartmentAccount {
+  role: "department";
+  email: string;
+  password: string;
+}
+
+export type Account = StudentAccount | DepartmentAccount;
+
+type AccountMap = Record<string, Account>;
 
 function load(): AccountMap {
   if (typeof window === "undefined") return {};
@@ -62,7 +70,16 @@ export function createStudentAccount(data: {
   return tempPassword;
 }
 
-export function getAccount(email: string): StudentAccount | undefined {
+/** Registers a department account with a self-chosen password. */
+export function createDepartmentAccount(email: string, password: string): DepartmentAccount {
+  const map = load();
+  const account: DepartmentAccount = { role: "department", email, password };
+  map[key(email)] = account;
+  save(map);
+  return account;
+}
+
+export function getAccount(email: string): Account | undefined {
   return load()[key(email)];
 }
 
@@ -70,19 +87,19 @@ export function getAccount(email: string): StudentAccount | undefined {
 export function verifyCredentials(
   email: string,
   password: string,
-): StudentAccount | null {
+): Account | null {
   const account = load()[key(email)];
   if (!account || account.password !== password) return null;
   return account;
 }
 
-/** Replaces the password and clears the must-reset flag. */
-export function setPassword(email: string, newPassword: string): StudentAccount | null {
+/** Replaces the password and clears the must-reset flag (students). */
+export function setPassword(email: string, newPassword: string): Account | null {
   const map = load();
   const account = map[key(email)];
   if (!account) return null;
   account.password = newPassword;
-  account.mustReset = false;
+  if (account.role === "student") account.mustReset = false;
   save(map);
   return account;
 }

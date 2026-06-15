@@ -20,7 +20,7 @@ function LoginForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const account = verifyCredentials(email, password);
-    if (!account) {
+    if (!account || account.role !== "student") {
       setError("Invalid email or password.");
       return;
     }

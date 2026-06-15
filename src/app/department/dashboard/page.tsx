@@ -2,7 +2,8 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Users, ClipboardCheck, BarChart3 } from "lucide-react";
+import Link from "next/link";
+import { Users, ClipboardCheck, BarChart3, Pencil } from "lucide-react";
 import { DashboardHeader } from "@/components/layout/DashboardHeader";
 import { Footer } from "@/components/layout/Footer";
 import { useAuth } from "@/context/AuthContext";
@@ -27,7 +28,7 @@ const cards = [
 
 export default function DepartmentDashboard() {
   const router = useRouter();
-  const { user, ready } = useAuth();
+  const { user, ready, deptProfile } = useAuth();
 
   useEffect(() => {
     if (ready && user?.role !== "department") router.replace("/department/auth");
@@ -46,10 +47,27 @@ export default function DepartmentDashboard() {
       <DashboardHeader subtitle="Department" />
       <main className="flex-1 bg-sky-soft">
         <div className="mx-auto max-w-5xl px-6 py-10">
-          <h1 className="text-2xl font-bold text-navy-deep">
-            Department Dashboard
-          </h1>
-          <p className="mt-1 text-sm text-navy-deep/70">{user.email}</p>
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <h1 className="text-2xl font-bold text-navy-deep">
+                {deptProfile?.fullName
+                  ? `Welcome, ${deptProfile.fullName}`
+                  : "Department Dashboard"}
+              </h1>
+              <p className="mt-1 text-sm text-navy-deep/70">
+                {deptProfile?.designation
+                  ? `${deptProfile.designation} · ${user.email}`
+                  : user.email}
+              </p>
+            </div>
+            <Link
+              href="/department/profile/edit"
+              className="inline-flex items-center gap-2 rounded-lg bg-navy-deep px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-navy"
+            >
+              <Pencil className="h-4 w-4" />
+              Edit profile
+            </Link>
+          </div>
 
           <div className="mt-8 grid gap-5 sm:grid-cols-3">
             {cards.map(({ icon: Icon, title, body }) => (

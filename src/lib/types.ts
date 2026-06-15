@@ -56,6 +56,18 @@ export const SPECIALIZATIONS = [
 
 export type Specialization = (typeof SPECIALIZATIONS)[number];
 
+/** Editable department/administrator profile. */
+export interface DepartmentProfile {
+  fullName: string;
+  universityId: string;
+  designation: string;
+  academicTitle: string;
+  contactNumber: string;
+  email: string;
+  /** Data-URL of the uploaded headshot. */
+  photo?: string;
+}
+
 /** Editable student profile (Academic Identity + Management Hub). */
 export interface StudentProfile {
   name: string;
